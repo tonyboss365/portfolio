@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chavva Akshay Kumar Reddy - Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4338ca;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --bg-dark: #0f0f23;
+      --bg-darker: #050508;
+      --text-light: #e2e8f0;
+      --text-dim: #94a3b8;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --neon-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+      overflow: hidden;
+    }
+
+    .hero-content {
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+      letter-spacing: -0.02em;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5)); }
+      100% { filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8)); }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5);
+    }
+
+    /* Glass morphism sections */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      margin: 5rem 0;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.6s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.5s;
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--neon-glow), 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* About section */
+    .about-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--text-dim);
+    }
+
+    .highlight {
+      color: var(--text-light);
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skill-category {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .skill-category:hover {
+      transform: scale(1.05);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .skill-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .skill-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .skill-item {
+      margin: 0.5rem 0;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .skill-item:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+      border-color: var(--primary);
+      transform: translateX(10px);
+    }
+
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: var(--neon-glow), 0 30px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .project-description {
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .project-status {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    /* Contact section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-item:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+    }
+
+    .contact-icon {
+      font-size: 2rem;
+      margin-right: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-info h3 {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-info p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    
+    /* --- CSS FOR ANIMATIONS (UPDATED) --- */
+    /* Animate project and contact cards */
+    .project-card,
+    .contact-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .project-card.is-visible,
+    .contact-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Animate individual skill/hobby list items */
+    .skill-item {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    .skill-item.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* --- END OF CSS FOR ANIMATIONS --- */
+
+    /* Footer */
+    footer {
+      margin-top: 5rem;
+      text-align: center;
+      padding: 3rem 0;
+      background: var(--bg-darker);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-text {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .hero-content {
+        padding: 0 1rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .glass-card {
+        padding: 2rem;
+      }
+      
+      .skills-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 1000;
+      transition: transform 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-indicator"></div>
+
+  <div class="particles"></div>
+
+  <header>
+    <div class="hero-content">
+      <h1 class="hero-title">Chavva Akshay Kumar Reddy</h1>
+      <p class="hero-subtitle">Building Tomorrow's Technology Today</p>
+      <a href="#about" class="cta-button">Explore My Journey</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="section" id="about">
+      <div class="glass-card">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <p>
+            Hello! I'm <span class="highlight">Chavva Akshay Kumar Reddy</span>, a passionate second-year CSE student at KLH-Bachupally. 
+            Driven by curiosity and an insatiable appetite for learning, I'm constantly exploring the frontiers of technology. 
+            As an aspiring developer, I believe in building not just code, but experiences that make a difference. 
+            Welcome to my digital journey where innovation meets dedication!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="glass-card">
+        <h2 class="section-title">Hobbies</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <div class="skill-icon">🎬</div>
+            <h3>Personal Interests</h3>
+            <ul class="skill-list">
+              <li class="skill-item">Cinema & Shows</li>
+              <li class="skill-item">Gaming</li>
+              <li class="skill-item">Sports</li>
+              <li class="skill-item">Video Editing</li>
+              <li class="skill-item">Coding</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+        <div class="glass-card">
+            <h2 class="section-title">Programming Languages</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-icon">💻</div>
+                    <h3>Technical Skills</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">C Programming</li>
+                        <li class="skill-item">Java</li>
+                        <li class="skill-item">Python</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+      <div class="glass-card">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <h3 class="project-title">Mini Game Zone</h3>
+            <p class="project-description">
+              An interactive collection of engaging mini-games crafted with HTML, CSS, and JavaScript. 
+              Features smooth gameplay mechanics and responsive design.
+            </p>
+            <span class="project-status">Live</span>
+          </div>
+          
+          <div class="project-card">
+            <h3 class="project-title">Enhanced Autonomous Navigation</h3>
+            <p class="project-description">
+              Cutting-edge robotics project exploring advanced navigation algorithms and real-time obstacle detection systems.
+            </p>
+            <span class="project-status">In Development</span>
+          </div>
+          
+          <div class="project-card">
+            <h3 class="project-title">BMI Calculator</h3>
+            <p class="project-description">
+              Sleek health monitoring tool with intuitive interface, providing instant BMI calculations and health insights.
+            </p>
+            <span class="project-status">Complete</span>
+          </div>
+          
+          <div class="project-card">
+            <h3 class="project-title">Password Generator</h3>
+            <p class="project-description">
+              Secure, customizable password generator with advanced entropy algorithms for maximum security.
+            </p>
+            <span class="project-status">Complete</span>
+          </div>
+          
+          <div class="project-card">
+            <h3 class="project-title">Smart Calculator</h3>
+            <p class="project-description">
+              Modern calculator application featuring advanced mathematical operations and elegant user interface.
+            </p>
+            <span class="project-status">Complete</span>
+          </div>
+          
+          <div class="project-card">
+            <h3 class="project-title">Student Management System</h3>
+            <p class="project-description">
+              Comprehensive system for efficient student record management with advanced filtering and search capabilities.
+            </p>
+            <span class="project-status">Complete</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="glass-card">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-grid">
+          <a href="mailto:akshay.shashank.brahma@gmail.com" class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-info">
+              <h3>Personal Email</h3>
+              <p>akshay.shashank.brahma@gmail.com</p>
+            </div>
+          </a>
+          
+          <a href="mailto:2420030604@klh.edu.in" class="contact-item">
+            <div class="contact-icon">🎓</div>
+            <div class="contact-info">
+              <h3>Academic Email</h3>
+              <p>2420030604@klh.edu.in</p>
+            </div>
+          </a>
+          
+          <a href="https://github.com/tonyboss365" target="_blank" class="contact-item">
+            <div class="contact-icon">💻</div>
+            <div class="contact-info">
+              <h3>GitHub</h3>
+              <p>github.com/tonyboss365</p>
+            </div>
+          </a>
+          
+          <a href="https://tonyboss365.github.io/fedf-projects/" target="_blank" class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <div class="contact-info">
+              <h3>fedf projects github page link</h3>
+              <p>tonyboss365.github.io/fedf-projects</p>
+            </div>
+          </a>
+          
+          <a href="https://www.linkedin.com/in/akshay-kumar-reddy-chavva-0a43b1381/" target="_blank" class="contact-item">
+            <div class="contact-icon">🔗</div>
+            <div class="contact-info">
+              <h3>LinkedIn</h3>
+              <p>Professional network</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-text">
+      © 2025 Chavva Akshay Kumar Reddy | Crafted with passion and code ✨
+    </div>
+  </footer>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.querySelector('.particles');
+      const numberOfParticles = 50;
+
+      for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Scroll indicator
+    function updateScrollIndicator() {
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height);
+      scrollIndicator.style.transform = `scaleX(${scrolled})`;
+    }
+
+    // Intersection Observer for main section animations
+    function observeSections() {
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    }
+    
+    // --- JAVASCRIPT FOR ANIMATIONS (UPDATED) ---
+
+    // Observer for project and contact cards
+    function observeGridCards() {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const children = entry.target.children;
+                    for (let i = 0; i < children.length; i++) {
+                        children[i].style.transitionDelay = `${i * 150}ms`;
+                        children[i].classList.add('is-visible');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.projects-grid, .contact-grid').forEach(container => {
+            observer.observe(container);
+        });
+    }
+
+    // Observer for individual list items (hobbies, skills)
+    function observeListItems() {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const listItems = entry.target.querySelectorAll('.skill-item');
+                    listItems.forEach((item, index) => {
+                        item.style.transitionDelay = `${index * 100}ms`; // Quicker delay for list items
+                        item.classList.add('is-visible');
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 }); // Trigger when list is well into view
+
+        document.querySelectorAll('.skill-category').forEach(container => {
+            observer.observe(container);
+        });
+    }
+    // --- END OF JAVASCRIPT FOR ANIMATIONS ---
+
+    // Smooth scrolling for CTA button
+    function setupSmoothScrolling() {
+      document.querySelector('.cta-button').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('#about').scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      observeSections();
+      observeGridCards(); // Handles projects and contact
+      observeListItems(); // Handles hobbies and languages
+      setupSmoothScrolling();
+    });
+
+    // Update scroll indicator on scroll
+    window.addEventListener('scroll', updateScrollIndicator);
+
+    // Add hover effect to project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        card.style.setProperty('--mouse-x', x + 'px');
+        card.style.setProperty('--mouse-y', y + 'px');
+      });
+    });
+  </script>
+</body>
+</html>
